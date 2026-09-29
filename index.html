@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart QR Code Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <style>
+      *{
+        box-sizing: border-box;
+      }
+      body{
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        font-family: Arial, sans-serif;
+        background-color: #033240;
+      }
+      .card{
+        width: 360px;
+        padding: 30px;
+        margin-top: 2rem;
+        background-color: #fff;
+        border-radius: 20px;
+        box-shadow: 0 20px 50px #0005;
+      }
+      h2{
+        margin-bottom: 8px;
+      }
+      p{
+        color: #777;
+        margin-bottom: 25px;
+      }
+      input{
+        width: 100%;
+        padding: 14px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        outline: none;
+        font-size: 15px;
+      }
+      button{
+        width: 100%;
+        padding: 13px;
+        margin-top: 12px;
+        border: 0;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #111;
+        color: #fff;
+      }
+      #qrcode{
+        margin: 25px auto 10px;
+        width: fit-content;
+      }
+      #download{
+        display: none;
+        background: #16a34a;
+      }
+      .show{
+        animation: pop .5s ease;
+      }
+      @keyframes pop{
+        from{
+          transform: scale(0);
+          opacity: 0;
+        }
+        to{
+          #download{
+            display: none;
+            background-color: #16a13a;
+          }
+        }
+      }
+    </style>
+</head>
+  <body>
+    <div class="card">
+      <h2>Smart QR Code Generator</h2>
+      <p>Turn any link into a QR code</p>
+      <input type="url" id="link" placeholder="https://example.com">
+      <button onclick='generateQrCode()'>Generate Qr Code</button>
+      <div id="qrcode"></div>
+      <button id="download" onclick="downloadQr()">Download QR Code</button>
+    </div>
+    <script>
+      function generateQrCode(){
+      const link = document.getElementById('link').value;
+      const qrCode = document.getElementById('qrcode');
+      const download = document.getElementById('download');
+      qrCode.innerHtml = '';
+      if(!link) return alert('Enter htta link first');
+
+      qrCode.innerHTML = '';
+      qrCode.className = 'show';
+
+      new QRCode(qrCode, link);
+
+      download.style.display = 'block';
+
+      }
+
+      function downloadQr(){
+        const img = document.querySelector('#qrcode img');
+
+        const link = document.createElement('a');
+
+        link.href = img.src;
+        link.download = 'qrcode.png';
+        link.click();
+      }
+    </script>
+  </body>
+</html>
+  
